@@ -1,0 +1,42 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: url('aa.jpeg') center/cover no-repeat;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+    color: #e74c3c;
+}
+
+form {
+    width: 100%;
+    max-width: 400px;
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #ecf0f1;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    background-color: #2c3e50;
+    border: 1px solid
