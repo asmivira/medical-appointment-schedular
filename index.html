@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Medical Appointments</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Medical Appointment Scheduler</h1>
+        
+        <form method="POST" action="{{ url_for('schedule') }}">
+            <label for="patient_name">Patient Name:</label>
+            <input type="text" id="patient_name" name="patient_name" required>
+
+            <label for="phone_number">Phone Number:</label>
+            <input type="tel" id="phone_number" name="phone_number" pattern="[6-9]\d{9}" placeholder="9876543210" required>
+
+            <label for="appointment_date">Appointment Date:</label>
+            <input type="date" id="appointment_date" name="appointment_date" required>
+
+            <label for="appointment_time">Appointment Time:</label>
+            <select id="appointment_time" name="appointment_time" required>
+                {% for hour in range(8, 18) %}
+                    {% for minute in [0, 30] %}
+                        {% set time = "%02d:%02d" % (hour, minute) %}
+                        <option value="{{ time }}">{{ time }}</option>
+                    {% endfor %}
+                {% endfor %}
+            </select>
+
+            <button type="submit">Schedule Appointment</button>
+        </form>
+
+        <h2>Appointments</h2>
+        {% if appointments %}
+            <ul>
+                {% for appointment in appointments %}
+                    <li>
+                        <strong>{{ appointment[1] }}</strong> - +91{{ appointment[2] }}
+                        {% if appointment[3] is defined %}
+                            {% if appointment[3] is string %}
+                                <p>Appointment Time: {{ appointment[3] }}</p>
+                            {% else %}
+                                <p>Appointment Time: {{ appointment[3].strftime('%Y-%m-%d %H:%M') }}</p>
+                            {% endif %}
+                        {% endif %}
+                        <a href="{{ url_for('delete', appointment_id=appointment[0]) }}" class="delete-link">Delete</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No appointments scheduled yet.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
